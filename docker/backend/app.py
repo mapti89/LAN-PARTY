@@ -12,6 +12,8 @@ CORS(app)
 data_folder = 'data/'
 img_folder = 'img/'
 xml_file = 'xml/jeux.xml'
+torrent_folder = 'torrent'
+
 # URL of the servers
 url_web_server = 'http://127.0.0.1/'
 
@@ -143,8 +145,7 @@ def effacer_jeu(titre):
     for jeu in root.findall('jeu'):
         if jeu.find('titre').text == titre:
             jeu_trouve = True
-            fichier = jeu.find('fichier').text
-            image = jeu.find('image').text
+            torrent_name = jeu.find('torrent').text
             root.remove(jeu)
             tree.write(xml_file)
 
@@ -153,6 +154,12 @@ def effacer_jeu(titre):
             if os.path.exists(chemin_repertoire_jeu):
                 import shutil
                 shutil.rmtree(chemin_repertoire_jeu)
+            
+            # Delete torrent file if its name is not "in progress"
+            if torrent_name != "in progress":
+                chemin_fichier_torrent = os.path.join(torrent_folder, torrent_name)
+                if os.path.isfile(chemin_fichier_torrent):
+                    os.remove(chemin_fichier_torrent)
 
             return Response(f"Game '{titre}' successfully deleted!", status=200)
 

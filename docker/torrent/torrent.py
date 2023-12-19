@@ -23,6 +23,7 @@ def create_torrent_api():
         file_path = os.path.join(absolute_path, directory_path, file_name)
         if os.path.exists(file_path):
             # Create a torrent
+            torrent_file_name = f'{file_name}.torrent'
             DL_path =  os.path.join(directory_path, file_name)
             torrent_path = f'{os.path.join("torrent/", file_name)}.torrent'
             torrent_url = f'http://127.0.0.1/{torrent_path}'
@@ -33,13 +34,13 @@ def create_torrent_api():
             torrent.comment = "Torrent automatically created on " + datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
             torrent.to_file(torrent_path)
             update_torrent_in_xml(value, torrent_url)
-            return f'Torrent created and registered: {torrent_path}'
+            return f'Torrent created and registered: {torrent_file_name}'
         else:
             return 'File not found', 404
     else:
         return 'Value directory not found', 404
     
-def update_torrent_in_xml(game_title, new_torrent_link):
+def update_torrent_in_xml(game_title, new_torrent_file):
     # Load and parse the XML file
     tree = ET.parse(xml_file)
     root = tree.getroot()
@@ -49,7 +50,7 @@ def update_torrent_in_xml(game_title, new_torrent_link):
         titre = jeu.find('titre').text
         if titre == game_title:
             torrent = jeu.find('torrent')
-            torrent.text = new_torrent_link
+            torrent.text = new_torrent_file
             break
 
     # Save the modifications in the XML file
