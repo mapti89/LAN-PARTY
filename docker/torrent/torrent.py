@@ -33,7 +33,7 @@ def create_torrent_api():
             torrent.announce_urls = 'udp://127.0.0.1:6969'
             torrent.comment = "Torrent automatically created on " + datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
             torrent.to_file(torrent_path)
-            update_torrent_in_xml(value, torrent_url)
+            update_torrent_in_xml(value, torrent_file_name)
             return f'Torrent created and registered: {torrent_file_name}'
         else:
             return 'File not found', 404

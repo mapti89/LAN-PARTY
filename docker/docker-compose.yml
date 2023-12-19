@@ -19,14 +19,14 @@ services:
       - "80:80"
     restart: unless-stopped
   
-  #opentracker:
-  #  #tracker de torrent
-  #  image: lednerb/opentracker-docker
-  #  container_name: opentracker
-  #  ports:
-  #    - "6969:6969/udp"
-  #    - "6969:6969"
-  #  restart: unless-stopped
+  opentracker:
+    #tracker de torrent
+    image: lednerb/opentracker-docker
+    container_name: opentracker
+    ports:
+      - "6969:6969/udp"
+      - "6969:6969"
+    restart: unless-stopped
 
   nginx-webseed:
     #service web pour servir de HTTP seed, le mettre à part permet de le binder sur une carte réseau différente pour ne pas impacter le reste des services (optionnel)
@@ -76,6 +76,7 @@ services:
     volumes:
       - /home/mapti89/Documents/LANPARTY-website/data/data:/usr/src/app/data
       - /home/mapti89/Documents/LANPARTY-website/data/xml:/usr/src/app/xml
+      - /home/mapti89/Documents/LANPARTY-website/data/torrent:/usr/src/app/torrent
     ports:
       - "5000:5000"
     networks:

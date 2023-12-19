@@ -25,7 +25,7 @@ function afficherJeux(xml) {
         let jeuDiv = document.createElement('div');
         jeuDiv.className = 'jeu';
         jeuDiv.innerHTML = `
-            <a href="${torrent}" target="_blank">
+            <a href="torrent/${torrent}" target="_blank">
                 <img src="data/${titre}/${image}" alt="${titre}">
             </a>
             <h2>${titre}</h2>
