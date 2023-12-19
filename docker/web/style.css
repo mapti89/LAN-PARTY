@@ -1,0 +1,92 @@
+/* Styles généraux */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212; /* Arrière-plan sombre */
+    color: #e0e0e0; /* Texte clair */
+}
+
+header {
+    background-color: #1e1e1e;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+header img {
+    max-width: 100%;
+    height: auto;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #1e1e1e;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Styles pour la liste des jeux */
+#listeJeux {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.jeu {
+    background-color: #242424; /* Fond des cartes de jeu */
+    border: 1px solid #333;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.jeu a {
+    display: block;
+}
+
+.jeu img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+}
+
+.jeu h2, .jeu p {
+    color: #e0e0e0; /* Texte clair pour une meilleure visibilité */
+    text-align: center;
+    margin: 0;
+    padding: 5px;
+}
+
+/* Adaptation à différentes tailles d'écran */
+@media (max-width: 600px) {
+    .jeu {
+        width: calc(100% - 20px);
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1000px) {
+    .jeu {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (min-width: 1001px) {
+    .jeu {
+        width: calc(33% - 20px);
+    }
+}

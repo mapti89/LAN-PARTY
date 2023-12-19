@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Jeux</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <button id="showAddGameModal" onclick="showAddGameModal()">Ajouter un jeu</button>
+    <div id="gameList"></div>
+
+    <!-- Ajouter ici les modales/formulaires pour l'édition et l'ajout de jeux -->
+
+    <script src="script.js"></script>
+</body>
+<div id="editModal" style="display:none;">
+    <h3>Éditer la Description</h3>
+    <form id="editForm">
+        <input type="hidden" id="editGameTitle">
+        <textarea id="editDescription"></textarea>
+        <button type="submit">Mettre à jour</button>
+        <button type="button" onclick="closeModal()">Annuler</button>
+    </form>
+</div>
+<div id="editTitleModal" style="display:none;">
+    <h3>Éditer le Titre du Jeu</h3>
+    <form id="editTitleForm">
+        <input type="hidden" id="editTitleGameId">
+        <div>
+            <label>Nouveau titre:</label>
+            <input type="text" id="newGameTitle">
+        </div>
+        <button type="submit">Mettre à jour</button>
+        <button type="button" onclick="closeTitleModal()">Annuler</button>
+    </form>
+</div>
+<div id="editImageModal" style="display:none;">
+    <h3>Éditer l'Image du Jeu</h3>
+    <form id="editImageForm" enctype="multipart/form-data">
+        <input type="hidden" id="editImageGameTitle">
+        <div>
+            <label>Nouvelle image:</label>
+            <input type="file" id="newGameImage" name="image">
+        </div>
+        <button type="submit">Mettre à jour</button>
+        <button type="button" onclick="closeImageModal()">Annuler</button>
+    </form>
+</div>
+<!-- Modal pour ajouter un jeu -->
+<div id="addGameModal" style="display:none;">
+    <h3>Ajouter un Jeu</h3>
+    <form id="addGameForm" enctype="multipart/form-data">
+        <div>
+            <label>Titre:</label>
+            <input type="text" id="gameTitle" name="titre" required>
+        </div>
+        <div>
+            <label>Description:</label>
+            <textarea id="gameDescription" name="descriptif" required></textarea>
+        </div>
+        <div>
+            <label>Image:</label>
+            <input type="file" id="gameImage" name="image" required>
+        </div>
+        <div>
+            <label>Fichier du jeu:</label>
+            <input type="file" id="gameFile" name="fichier" required>
+        </div>
+        <button type="submit">Ajouter</button>
+        <button type="button" onclick="closeAddGameModal()">Annuler</button>
+    </form>
+</div>
+</html>

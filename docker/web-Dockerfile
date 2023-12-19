@@ -1,0 +1,6 @@
+FROM nginx
+WORKDIR /usr/share/nginx/html
+COPY web/style.css .
+COPY web/script.js .
+COPY web/lan_party.png .
+COPY web/index.html .

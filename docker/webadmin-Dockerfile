@@ -1,0 +1,6 @@
+FROM nginx
+WORKDIR /usr/share/nginx/html
+COPY webadmin/style.css .
+COPY webadmin/script.js .
+COPY webadmin/favicon.ico .
+COPY webadmin/index.html .
