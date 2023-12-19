@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     chargerJeux();
+    window.setTimeout(() => {
+        document.getElementById('listeJeux').style.top = '0';
+    }, 100); // Retard léger pour s'assurer que la page est complètement chargée
 });
 
 function chargerJeux() {
