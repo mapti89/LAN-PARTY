@@ -1,9 +1,21 @@
 version: '3.8'
 
 services:
+#######container d'initialisation#######
 
+  init:
+    build: 
+      context: .
+      dockerfile: ./init-Dockerfile
+    container_name: init
+    volumes:
+      - ${FOLDER}:/usr/src/app/mount/
+    env_file:
+    - .env
+    restart: no
 #######Partie Client########
   
+
   nginx-web:
     #site web présenté au client
     build: 
@@ -11,31 +23,40 @@ services:
       dockerfile: ./web-Dockerfile
     container_name: web
     volumes:
-      #- /home/mapti89/Documents/LANPARTY-website/web:/usr/share/nginx/html
-      - /home/mapti89/Documents/LANPARTY-website/data/xml:/usr/share/nginx/html/xml:ro
-      - /home/mapti89/Documents/LANPARTY-website/data/torrent:/usr/share/nginx/html/torrent:ro
-      - /home/mapti89/Documents/LANPARTY-website/data/data:/usr/share/nginx/html/data:ro
+      - ${FOLDER}/xml:/usr/share/nginx/html/xml:ro
+      - ${FOLDER}/torrent:/usr/share/nginx/html/torrent:ro
+      - ${FOLDER}/data:/usr/share/nginx/html/data:ro
     ports:
       - "80:80"
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    env_file:
+    - .env
     restart: unless-stopped
   
- # opentracker:
- #   #tracker de torrent
- #   image: lednerb/opentracker-docker
- #   container_name: opentracker
- #   ports:
- #     - "6969:6969/udp"
- #     - "6969:6969"
- #   restart: unless-stopped
+  opentracker:
+    #tracker de torrent
+    image: lednerb/opentracker-docker
+    container_name: opentracker
+    ports:
+      - "6969:6969/udp"
+      - "6969:6969"
+    restart: unless-stopped
 
   nginx-webseed:
     #service web pour servir de HTTP seed, le mettre à part permet de le binder sur une carte réseau différente pour ne pas impacter le reste des services (optionnel)
     image: nginx
     container_name: httpseed
     volumes:
-      - /home/mapti89/Documents/LANPARTY-website/data:/usr/share/nginx/html:ro
+      - ${FOLDER}:/usr/share/nginx/html:ro
     ports:
       - "8080:80"
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    env_file:
+    - .env      
     restart: unless-stopped
 
 #######Partie Admin########
@@ -45,10 +66,11 @@ services:
       context: .
       dockerfile: ./webadmin-Dockerfile
     container_name: web-admin
-    #volumes:
-      #- /home/mapti89/Documents/LANPARTY-website/webadmin:/usr/share/nginx/html
     ports:
       - "82:80"
+    depends_on:
+      backend:
+        condition: service_started     
     restart: unless-stopped
 
   torrent:
@@ -58,13 +80,18 @@ services:
       dockerfile: ./torrent-Dockerfile
     container_name: torrent
     volumes:
-      - /home/mapti89/Documents/LANPARTY-website/data/data:/usr/src/app/data:ro
-      - /home/mapti89/Documents/LANPARTY-website/data/xml:/usr/src/app/xml
-      - /home/mapti89/Documents/LANPARTY-website/data/torrent:/usr/src/app/torrent
+      - ${FOLDER}/data:/usr/src/app/data:ro
+      - ${FOLDER}/xml:/usr/src/app/xml
+      - ${FOLDER}/torrent:/usr/src/app/torrent
     ports:
       - "5001:5001"
     networks:
       - backend
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    env_file:
+    - .env
     restart: unless-stopped
 
   backend:
@@ -74,13 +101,18 @@ services:
       dockerfile: ./backend-Dockerfile
     container_name: backend
     volumes:
-      - /home/mapti89/Documents/LANPARTY-website/data/data:/usr/src/app/data
-      - /home/mapti89/Documents/LANPARTY-website/data/xml:/usr/src/app/xml
-      - /home/mapti89/Documents/LANPARTY-website/data/torrent:/usr/src/app/torrent
+      - ${FOLDER}/data:/usr/src/app/data
+      - ${FOLDER}/xml:/usr/src/app/xml
+      - ${FOLDER}/torrent:/usr/src/app/torrent
     ports:
       - "5000:5000"
     networks:
       - backend
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    env_file:
+    - .env
     restart: unless-stopped
 
 networks:
