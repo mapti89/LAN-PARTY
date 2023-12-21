@@ -35,41 +35,36 @@ def titre_unique(titre):
 # Adding a game with creation of a directory for each game
 @app.route('/ajouter_jeu', methods=['POST'])
 def ajouter_jeu():
-    if request.method == 'POST':
-        titre = request.form['titre']
-        fichier = request.files['fichier']
-        descriptif = request.form['descriptif']
-        image = request.files['image']
-
-        if not titre_unique(titre):
-            return Response("The game title already exists. Please choose a unique title.", status=400)
-
-        # Creating the directory for the game (if it does not already exist)
-        chemin_repertoire_jeu = os.path.join(data_folder, titre)
-        if not os.path.exists(chemin_repertoire_jeu):
-            os.makedirs(chemin_repertoire_jeu)
-
-        # Saving the game file in the corresponding directory
-        chemin_fichier_jeu = os.path.join(chemin_repertoire_jeu, fichier.filename)
-        fichier.save(chemin_fichier_jeu)
-
-        # Saving the game image in the corresponding directory
-        chemin_image_jeu = os.path.join(chemin_repertoire_jeu, image.filename)
-        image.save(chemin_image_jeu)
-        
-        # Adding information in the XML file
-        ajouter_jeu_xml(titre, fichier.filename, descriptif, image.filename, "in progress")
-
-        # POST request to the torrent creation service
-        url_backend = 'http://torrent:5001/create_torrent'
-        data = {'value': (titre), 'file_name': (fichier.filename)}
-        response = requests.post(url_backend, data=data)
     
-        if response.status_code != 200:
-            return Response("Error creating the torrent: " + response.text, status=400)
+    titre = request.form['titre']
+    fichier = request.files['fichier']
+    descriptif = request.form['descriptif']
+    image = request.files['image']
 
-        return Response("Game successfully added!", status=200)
+    if not titre_unique(titre):
+        return Response("The game title already exists. Please choose a unique title.", status=400)
+    # Creating the directory for the game (if it does not already exist)
+    chemin_repertoire_jeu = os.path.join(data_folder, titre)
+    if not os.path.exists(chemin_repertoire_jeu):
+        os.makedirs(chemin_repertoire_jeu)
+    # Saving the game file in the corresponding directory
+    chemin_fichier_jeu = os.path.join(chemin_repertoire_jeu, fichier.filename)
+    fichier.save(chemin_fichier_jeu)
+    # Saving the game image in the corresponding directory
+    chemin_image_jeu = os.path.join(chemin_repertoire_jeu, image.filename)
+    image.save(chemin_image_jeu)
     
+    # Adding information in the XML file
+    ajouter_jeu_xml(titre, fichier.filename, descriptif, image.filename, "in progress")
+    # POST request to the torrent creation service
+    url_backend = 'http://torrent:5001/create_torrent'
+    data = {'value': (titre), 'file_name': (fichier.filename)}
+    response = requests.post(url_backend, data=data)
+
+    if response.status_code != 200:
+        return Response("Error creating the torrent: " + response.text, status=400)
+    return Response("Game successfully added!", status=200)
+  
 # Function to add a game in the XML file
 def ajouter_jeu_xml(titre, fichier, descriptif, image, torrent_status):
     tree = ET.parse(xml_file)

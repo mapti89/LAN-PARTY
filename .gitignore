@@ -1,5 +1,1 @@
-data/data/
-data/torrent/
-data/xml/jeux.xml
-todo.list
-docker/docker-compose.yml
+.gitignore
