@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 import requests
+import time
 
 def envoyer_requete(jeu, fichier):
     url_backend = 'http://torrent:5001/create_torrent'
@@ -23,5 +24,6 @@ def traiter_fichier_xml(chemin_fichier):
 
 # Chemin vers le fichier XML
 chemin_fichier_xml = '/usr/src/app/mount/jeux.xml'
+time.sleep(5) #dirty I know...
 traiter_fichier_xml(chemin_fichier_xml)
 

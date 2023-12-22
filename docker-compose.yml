@@ -12,7 +12,7 @@ services:
       - ${FOLDER}:/usr/src/app/mount/
     env_file:
     - .env
-    restart: no
+    restart: "no"
 
   init2:
     build: 
@@ -28,7 +28,7 @@ services:
         condition: service_started
     networks:
       - backend
-    restart: no
+    restart: "no"
     
 #######Partie Client########
   
