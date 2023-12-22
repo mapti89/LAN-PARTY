@@ -2,10 +2,6 @@ merge torrent.py and app.py in the same container
 
 secure webadmin with login password
 
-manage path, ip and port with variable - > reverse proxy
-
 merge torrent folder with data (torrent file in data/{title})
-
-at startup change in .torrent file the IP of webseed to match host IP ( to be implemented in the init container)
 
 Change user that are running process

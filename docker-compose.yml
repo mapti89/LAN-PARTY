@@ -13,6 +13,22 @@ services:
     env_file:
     - .env
     restart: no
+
+  init2:
+    build: 
+      context: .
+      dockerfile: ./init2-Dockerfile
+    container_name: init2
+    volumes:
+      - ${FOLDER}/xml:/usr/src/app/mount/
+    env_file:
+    - .env
+    depends_on:
+      torrent:
+        condition: service_started
+    networks:
+      - backend
+    restart: no
     
 #######Partie Client########
   
@@ -30,7 +46,7 @@ services:
     ports:
       - "80:80"
     depends_on:
-      init:
+      init2:
         condition: service_completed_successfully
     env_file:
     - .env

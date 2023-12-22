@@ -61,8 +61,8 @@ def ajouter_jeu():
     data = {'value': (titre), 'file_name': (fichier.filename)}
     response = requests.post(url_backend, data=data)
 
-    if response.status_code != 200:
-        return Response("Error creating the torrent: " + response.text, status=400)
+    #if response.status_code != 200:
+    #    return Response("Error creating the torrent: " + response.text, status=400)
     return Response("Game successfully added!", status=200)
   
 # Function to add a game in the XML file
