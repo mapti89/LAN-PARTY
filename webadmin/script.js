@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:5000';
+const BASE_URL = 'http://192.168.100.221:5000';
 
 function loadGames() {
     console.log("Chargement des jeux...");
