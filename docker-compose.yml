@@ -45,20 +45,20 @@ services:
       - "6969:6969"
     restart: unless-stopped
 
-  nginx-webseed:
-    #service web pour servir de HTTP seed, le mettre à part permet de le binder sur une carte réseau différente pour ne pas impacter le reste des services (optionnel)
-    image: nginx
-    container_name: httpseed
-    volumes:
-      - ${FOLDER}:/usr/share/nginx/html:ro
-    ports:
-      - "8080:80"
-    depends_on:
-      init:
-        condition: service_completed_successfully
-    env_file:
-    - .env      
-    restart: unless-stopped
+#  nginx-webseed:
+#    #service web pour servir de HTTP seed, le mettre à part permet de le binder sur une carte réseau différente pour ne pas impacter le reste des services (optionnel)
+#    image: nginx
+#    container_name: httpseed
+#    volumes:
+#      - ${FOLDER}:/usr/share/nginx/html:ro
+#    ports:
+#      - "8080:80"
+#    depends_on:
+#      init:
+#        condition: service_completed_successfully
+#    env_file:
+#    - .env      
+#    restart: unless-stopped
 
 #######Partie Admin########
   nginx-webadmin:
@@ -68,7 +68,9 @@ services:
       dockerfile: ./webadmin-Dockerfile
     container_name: web-admin
     ports:
-      - "82:80"
+      - "82:82"
+    networks:
+      - backend
     depends_on:
       backend:
         condition: service_started     
@@ -84,8 +86,6 @@ services:
       - ${FOLDER}/data:/usr/src/app/data:ro
       - ${FOLDER}/xml:/usr/src/app/xml
       - ${FOLDER}/torrent:/usr/src/app/torrent
-    ports:
-      - "5001:5001"
     networks:
       - backend
     depends_on:
@@ -105,8 +105,6 @@ services:
       - ${FOLDER}/data:/usr/src/app/data
       - ${FOLDER}/xml:/usr/src/app/xml
       - ${FOLDER}/torrent:/usr/src/app/torrent
-    ports:
-      - "5000:5000"
     networks:
       - backend
     depends_on:

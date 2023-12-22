@@ -2,7 +2,7 @@ merge torrent.py and app.py in the same container
 
 secure webadmin with login password
 
-manage path, ip and port with variable
+manage path, ip and port with variable - > reverse proxy
 
 merge torrent folder with data (torrent file in data/{title})
 

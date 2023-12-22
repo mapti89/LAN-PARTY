@@ -4,3 +4,4 @@ COPY webadmin/style.css .
 COPY webadmin/script.js .
 COPY webadmin/favicon.ico .
 COPY webadmin/index.html .
+COPY webadmin/nginx.conf /etc/nginx/nginx.conf

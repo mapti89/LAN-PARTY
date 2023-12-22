@@ -1,8 +1,6 @@
-const BASE_URL = 'http://192.168.100.221:5000';
-
 function loadGames() {
     console.log("Chargement des jeux...");
-    fetch(`${BASE_URL}/liste_jeux`)
+    fetch(`API/liste_jeux`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Réponse réseau non OK');
@@ -45,7 +43,7 @@ function closeImageModal() {
 }
 
 function deleteGame(gameTitle) {
-    fetch(`${BASE_URL}/effacer_jeu/${gameTitle}`, { method: 'DELETE' })
+    fetch(`API/effacer_jeu/${gameTitle}`, { method: 'DELETE' })
         .then(response => {
             if (response.ok) {
                 loadGames(); // Recharger la liste des jeux après la suppression
@@ -128,7 +126,7 @@ function updateGameImage(title, imageFile) {
     formData.append('title', title);
     formData.append('image', imageFile);
 
-    fetch(`${BASE_URL}/update_game_image`, {
+    fetch(`API/update_game_image`, {
         method: 'POST',
         body: formData // Pas besoin de définir Content-Type, il est automatiquement défini avec FormData
     })
@@ -150,7 +148,7 @@ function addGame(formData) {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open("POST", `${BASE_URL}/ajouter_jeu`, true);
+    xhr.open("POST", `API/ajouter_jeu`, true);
 
     // Gérer les changements d'état de la requête
     xhr.onreadystatechange = function() {
@@ -181,7 +179,7 @@ function addGame(formData) {
 }
 
 function updateGameDescription(title, description) {
-    fetch(`${BASE_URL}/update_game_description`, {
+    fetch(`API/update_game_description`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -203,7 +201,7 @@ function updateGameDescription(title, description) {
 }
 
 function updateGameTitle(oldTitle, newTitle) {
-    fetch(`${BASE_URL}/update_game_title`, {
+    fetch(`API/update_game_title`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
