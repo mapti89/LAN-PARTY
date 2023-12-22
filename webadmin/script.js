@@ -143,20 +143,43 @@ function updateGameImage(title, imageFile) {
     .catch(error => alert('Erreur: ' + error));
 }
 function addGame(formData) {
-    fetch(`${BASE_URL}/ajouter_jeu`, {
-        method: 'POST',
-        body: formData // Pas besoin de définir Content-Type, il est automatiquement défini avec FormData
-    })
-    .then(response => {
-        if (response.ok) {
-            closeAddGameModal();
-            loadGames(); // Recharger la liste des jeux
-        } else {
-            alert("Erreur lors de l'ajout du jeu");
+    // Afficher la barre de chargement
+    document.getElementById('loadingBar').style.display = 'block';
+    let loadingProgress = document.getElementById('loadingProgress');
+    loadingProgress.style.width = '0%';
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("POST", `${BASE_URL}/ajouter_jeu`, true);
+
+    // Gérer les changements d'état de la requête
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) { // La requête est terminée
+            if (xhr.status == 200) { // Succès
+                loadingProgress.style.width = '100%';
+                setTimeout(() => {
+                    closeAddGameModal();
+                    loadGames(); // Recharger la liste des jeux
+                    document.getElementById('loadingBar').style.display = 'none';
+                }, 500);
+            } else { // Erreur
+                alert("Erreur lors de l'ajout du jeu");
+                document.getElementById('loadingBar').style.display = 'none';
+            }
         }
-    })
-    .catch(error => alert('Erreur: ' + error));
+    };
+
+    // Gérer la progression de l'envoi
+    xhr.upload.onprogress = function(event) {
+        if (event.lengthComputable) {
+            const percentComplete = (event.loaded / event.total) * 100;
+            loadingProgress.style.width = percentComplete + '%';
+        }
+    };
+
+    xhr.send(formData);
 }
+
 function updateGameDescription(title, description) {
     fetch(`${BASE_URL}/update_game_description`, {
         method: 'POST',

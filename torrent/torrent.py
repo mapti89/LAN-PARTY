@@ -10,8 +10,9 @@ absolute_path = os.path.dirname(__file__)
 app = Flask(__name__)
 
 # URL of the servers
-url_web_server = 'http://127.0.0.1/'
-url_webseed = 'http://127.0.0.1:8080/'
+url_web_server = os.environ.get('URL_WEB_SERVER')
+tracker_url = "udp" + url_web_server[4:-1] + ":6969"
+url_webseed = os.environ.get('URL_WEBSEED')
 
 @app.route('/create_torrent', methods=['POST'])
 def create_torrent_api():
@@ -34,7 +35,7 @@ def create_torrent_api():
             torrent = Torrent.create_from(file_path)
             torrent.private = True
             torrent.webseeds = url_webseed + DL_path
-            torrent.announce_urls = 'udp://127.0.0.1:6969'
+            torrent.announce_urls = tracker_url
             torrent.comment = "Torrent automatically created on " + datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
             torrent.to_file(torrent_path)
             update_torrent_in_xml(value, torrent_file_name)

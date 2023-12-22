@@ -15,7 +15,7 @@ xml_file = 'xml/jeux.xml'
 torrent_folder = 'torrent'
 
 # URL of the servers
-url_web_server = 'http://127.0.0.1/'
+url_web_server = os.environ.get('URL_WEB_SERVER')
 
 # Home page
 @app.route('/')

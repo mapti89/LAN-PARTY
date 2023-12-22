@@ -6,4 +6,6 @@ manage path, ip and port with variable
 
 merge torrent folder with data (torrent file in data/{title})
 
-at startup change in .torrent file the IP of webseed to match host IP
+at startup change in .torrent file the IP of webseed to match host IP ( to be implemented in the init container)
+
+Change user that are running process

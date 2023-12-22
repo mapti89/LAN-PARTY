@@ -60,3 +60,13 @@
     z-index: 1000; /* S'assurer qu'il soit au-dessus des autres éléments */
     box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
 }
+#loadingBar {
+    width: 100%;
+    background-color: #ddd;
+}
+
+#loadingProgress {
+    height: 20px;
+    width: 0%;
+    background-color: #4CAF50;
+}
