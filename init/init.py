@@ -19,3 +19,17 @@ def setup_directories_and_file():
 
 # Note: Run this function in your Python environment
 setup_directories_and_file()
+#url_web_server = os.environ.get('URL_WEB_SERVER')
+#file_path = '/usr/src/app/webadmin/script.js'
+#search_string = "const BASE_URL ="
+#replace_string = "const BASE_URL = '" + url_web_server + "':5000"
+## Lire le contenu du fichier
+#with open(file_path, 'r') as file:
+#    file_contents = file.read()
+#
+## Remplacer la chaîne
+#file_contents = file_contents.replace(search_string, replace_string)
+#
+## Réécrire le fichier avec le contenu modifié
+#with open(file_path, 'w') as file:
+#    file.write(file_contents)
